@@ -27,18 +27,88 @@ const CompanyHeader = () => (
     </div>
 );
 
+const customChannelTeamFilter = (channels) => {
+    return channels.filter((channel) => channel.type === 'team');
+};
 
-const ChannelListContainer = () => {
+const customChannelMessagingFilter = (channels) => {
+    return channels.filter((channel) => channel.type === 'messaging');
+};
+
+const ChannelListContainer = ({ isCreating, setIsCreating, setCreateType, setIsEditing, setToggleContainer }) => {
+
+    const { client } = useChatContext();
+
+    const filters = { members: { $in: [client.userID] } };
+
     return (
         <>
 
             {/* Navigation Side Bar */}
             <SideBar />
 
-            {/* Company Header */}
+            {/* Main Content */}
             <div className="channel-list__list__wrapper">
+
+                {/* Company Header */}
                 <CompanyHeader />
+
+                {/* Search */}
                 <ChannelSearch />
+
+                {/* Filters */}
+                <ChannelList 
+                    filters={filters}
+                    channelRenderFilterFn={customChannelTeamFilter}
+                    List={(listProps) => (
+                        <TeamChannelList 
+                            {...listProps}
+                            type="team"
+                            isCreating={isCreating}
+                            setIsCreating={setIsCreating}
+                            setCreateType={setCreateType} 
+                            setIsEditing={setIsEditing}
+                            setToggleContainer={setToggleContainer}
+                        />
+                    )}
+                    Preview={(previewProps) => (
+                        <TeamChannelPreview 
+                            {...previewProps}
+                            setIsCreating={setIsCreating}
+                            setIsEditing={setIsEditing}
+                            setToggleContainer={setToggleContainer}
+                            type="team"
+                        />
+                    )}
+                />
+
+                {/* Messages */}
+                <ChannelList 
+                    filters={filters}
+                    channelRenderFilterFn={customChannelMessagingFilter}
+                    List={(listProps) => (
+                        <TeamChannelList 
+                            {...listProps}
+                            type="messaging"
+                            isCreating={isCreating}
+                            setIsCreating={setIsCreating}
+                            setCreateType={setCreateType} 
+                            setIsEditing={setIsEditing}
+                            setToggleContainer={setToggleContainer}
+                        />
+                    )}
+                    Preview={(previewProps) => (
+                        <TeamChannelPreview 
+                            {...previewProps}
+                            setIsCreating={setIsCreating}
+                            setIsEditing={setIsEditing}
+                            setToggleContainer={setToggleContainer}
+                            type="messaging"
+                        />
+                    )}
+                />
+
+
             </div>
 
 
