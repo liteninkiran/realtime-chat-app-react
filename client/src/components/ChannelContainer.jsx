@@ -29,7 +29,7 @@ const ChannelContainer = ({ isCreating, setIsCreating, isEditing, setIsEditing, 
     return (
         <div className=" channel__container">
             {/* Channel */}
-            <h1>Channel</h1>
+            <h1>Channel Container</h1>
         </div>
     );
 }

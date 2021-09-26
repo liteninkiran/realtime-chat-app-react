@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import { ChannelListContainer, ChannelContainer } from './components';
 
 import './App.css';
+// import 'stream-chat-react/dist/css/index.css';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -15,8 +16,10 @@ const App = () => {
 
     return (
         <div className="app__wrapper">
-            <ChannelListContainer />
-            <ChannelContainer />
+            <Chat client={client} theme="team light">
+                <ChannelListContainer />
+                <ChannelContainer />
+            </Chat>
         </div>
     );
 }
